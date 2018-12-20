@@ -1,0 +1,18 @@
+# IDE #
+.idea/*
+__pycache__/
+
+
+# OS generated files #
+.DS_Store
+
+
+# Compiled source #
+__init__.py
+*.pyc
+
+
+# Results #
+*.gif
+*.png
+*.jpg
