@@ -1,18 +1,20 @@
+from ui import plotting
+
 from numpy.random import shuffle, np
 from termcolor import colored
-
-import plotting
-from behavior.org_behavior import behave_on_other_organism, behave_on_food
-from evolution import evolve
-from functions.name_functions import first_gen_org_name_template
-from make_gif import make_gif
+from ui.make_gif import make_gif
 from tqdm import tqdm
 
-from objects.food import Food
+from evolution import evolve
+from behavior.org_behavior import behave_on_other_organism, behave_on_food
+from functions.name_functions import first_gen_org_name_template
 from objects.organism import Organism
+from objects.food import Food
 
 
 def simulate_all_generations(settings):
+    print(colored("Universe generation is started. "
+                  "Please be patient, even God needed 7 days for this...\n", 'cyan'))
     gen_stats = []
     organisms, foods = _simulate_environment(settings)
     for gen in range(0, settings['gens']):
@@ -32,7 +34,7 @@ def simulate_all_generations(settings):
 
 def _simulate_environment(settings):
     foods = []
-    for food in range(0, settings['food_num']):
+    for _ in range(0, settings['food_num']):
         foods.append(Food(settings))
 
     organisms = []
@@ -110,5 +112,5 @@ def _print_generation_stats(gen, stats):
 
 
 def _build_generation_gif(settings, gen):
-    print('> GEN-' + str(gen), '.gif file is building...')
+    print(' > GEN-' + str(gen), '.gif file is building...')
     make_gif(settings, gen)

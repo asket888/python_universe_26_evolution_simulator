@@ -1,10 +1,12 @@
+import warnings
 import numpy as np
 
 from settings import settings
 from simulation import simulate_all_generations
 
 
-settings = settings()
+SETTINGS = settings()
+warnings.filterwarnings("ignore")
 
 
 def run(settings):
@@ -13,4 +15,4 @@ def run(settings):
 
 
 if __name__ == '__main__':
-    run(settings)
+    run(SETTINGS)

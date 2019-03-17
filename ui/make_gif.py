@@ -7,7 +7,7 @@ from functions.name_functions import result_gif_name_template
 
 def make_gif(settings, gen):
 
-    file_list = glob.glob(os.getcwd() + '/temp/**/*.png', recursive=True)
+    file_list = glob.glob(os.getcwd() + '/results/temp/**/*.png', recursive=True)
 
     list.sort(file_list, key=lambda x: int(x.split('.png')[0].split('-')[1]))
     images = []
