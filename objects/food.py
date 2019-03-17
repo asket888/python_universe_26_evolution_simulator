@@ -1,7 +1,7 @@
 from numpy.random import uniform
 
 
-class Food():
+class Food:
 
     def __init__(self, settings):
         self.x = uniform(settings['x_min'], settings['x_max'])

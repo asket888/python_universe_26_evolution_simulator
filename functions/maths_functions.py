@@ -23,3 +23,11 @@ def dist_to_neighbour(org1, org2):
 
 def xy_dist_to_neighbour(org1, org2):
     return xy_dist(org2.x_tail, org1.x, org2.y_tail, org1.y)
+
+
+def dist_to_predator(org, pred):
+    return dist(pred.x_tail, org.x, pred.y_tail, org.y)
+
+
+def xy_dist_to_predator(org, pred):
+    return xy_dist(pred.x_tail, org.x, pred.y_tail, org.y)
