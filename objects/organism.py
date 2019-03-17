@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Organism():
+class Organism:
     def __init__(self, settings, wih=None, who=None, name=None):
 
         self.velocity_decay_factor = settings['org_momentum']
@@ -53,8 +53,8 @@ class Organism():
         self.y_tail = self.y
 
         # UPDATE VELOCITIES
-        self.x_velocity = float(out[0]) + self.x_velocity*self.velocity_decay_factor
-        self.y_velocity = float(out[1]) + self.y_velocity*self.velocity_decay_factor
+        self.x_velocity = float(out[0]) + self.x_velocity * self.velocity_decay_factor
+        self.y_velocity = float(out[1]) + self.y_velocity * self.velocity_decay_factor
 
         # UPDATE POSITION
         self.x += self.x_velocity

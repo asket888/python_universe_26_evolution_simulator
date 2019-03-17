@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 def frame_img_name_template(gen, time):
-    return 'temp/' + str(gen) + '-' + str(time) + '.png'
+    return 'results/temp/' + str(gen) + '-' + str(time) + '.png'
 
 
 def result_img_name_template(settings):

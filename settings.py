@@ -5,7 +5,7 @@ def settings():
     settings['name'] = 'universe_26'
 
     # EVOLUTION SETTINGS
-    settings['gens'] = 10                     # number of generations
+    settings['gens'] = 100                     # number of generations
     settings['pop_size'] = 30                  # number of organisms
     settings['food_num'] = 15                  # number of food particles
     settings['elitism'] = 0.35                 # elitism (percent of population to keep and allow to have children)
