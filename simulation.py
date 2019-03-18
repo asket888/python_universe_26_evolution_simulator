@@ -102,7 +102,7 @@ def _get_generation_stats(generation):
 
 def _print_generation_stats(gen, stats):
     print(
-        ' > GEN-' + str(gen), ':',
+        ' > GEN-' + str(gen + 1), ':',
         colored(('BEST:', np.round(stats['BEST'], 2)), 'green'),
         colored(('AVG:', np.round(stats['AVG'], 2)), 'blue'),
         colored(('WORST:', np.round(stats['WORST'], 2)), 'red')
@@ -110,5 +110,5 @@ def _print_generation_stats(gen, stats):
 
 
 def _build_generation_gif(settings, gen):
-    print(' > GEN-' + str(gen), '.gif file is building...\n')
+    print(' > GEN-' + str(gen + 1), '.gif file is building...\n')
     make_gif.make_gif(settings, gen)

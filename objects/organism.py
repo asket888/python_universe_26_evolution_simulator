@@ -4,6 +4,8 @@ import numpy as np
 class Organism:
     def __init__(self, settings, wih=None, who=None, name=None):
 
+        self.fitness = settings['org_start_fitness']  # fitness (organism energy)
+
         self.max_velocity = settings['org_max_velocity']
         self.velocity_decay_factor = settings['org_momentum']
 
@@ -26,8 +28,6 @@ class Organism:
 
         self.x_distance_to_neighbour = 0  #
         self.y_distance_to_neighbour = 0  #
-
-        self.fitness = 5  # fitness (organism energy)
 
         self.wih = wih  # weights from input to hidden layer
         self.who = who  # weights from hidden layer to output
@@ -52,13 +52,14 @@ class Organism:
         h1 = af(np.dot(self.wih, inputs))  # hidden layer
         out = np.multiply(af(np.dot(self.who, h1)), 0.5)  # output layer
 
+        # UPDATE TAIL
+        self.x_tail = self.x
+        self.y_tail = self.y
+
+        # DEAD ORGANISM
         if self.fitness <= 0:
             self.max_velocity = 0
         else:
-            # UPDATE TAIL
-            self.x_tail = self.x
-            self.y_tail = self.y
-
             # UPDATE VELOCITIES
             self.x_velocity = float(out[0]) + self.x_velocity * self.velocity_decay_factor
             if abs(self.x_velocity) > self.max_velocity:
