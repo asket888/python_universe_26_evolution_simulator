@@ -32,7 +32,7 @@ def behave_on_other_organism(closest_dist, penalty_dist, penalty_value, org1, or
     return closest_dist
 
 
-def behave_on_predator(closest_dist, penalty_dist, penalty_value, org, pred):
+def behave_on_predator(closest_dist, penalty_dist, org, pred):
     # get the closest neighbour
     if org is pred:
         pass
@@ -43,7 +43,6 @@ def behave_on_predator(closest_dist, penalty_dist, penalty_value, org, pred):
 
     # update organism fitness function
     if org_pred_dist <= penalty_dist:
-        org.fitness -= penalty_value
-        org.max_velocity = 0
+        org.fitness = 0
 
     return closest_dist

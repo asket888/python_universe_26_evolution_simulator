@@ -2,25 +2,27 @@ from numpy.random import shuffle, np
 from termcolor import colored
 from tqdm import tqdm
 
-from evolution import evolve
+from evolution import evolve_organisms, evolve_predators
 from objects.food import Food
 from objects.organism import Organism
 from functions.name_functions import first_gen_org_name_template
-from behavior.org_behavior import behave_on_other_organism, behave_on_food
+from behavior import organism_behavior, predator_behavior
 from gui import plotting, make_gif
+from objects.predator import Predator
 
 
 def simulate_all_generations(settings):
     print(colored("Universe creation is started. "
                   "Please be patient, even God needed 7 days for this...\n", 'cyan'))
     gen_stats = []
-    organisms, foods = _simulate_environment(settings)
+    predators, organisms, foods = _simulate_environment(settings)
     for gen in range(0, settings['gens']):
-        organisms = _simulate_one_generation(settings, organisms, foods, gen)
+        organisms = _simulate_one_generation(settings, predators, organisms, foods, gen)
         stats = _get_generation_stats(organisms)
         gen_stats.append(stats)
 
-        organisms = evolve(settings, organisms, gen)
+        organisms = evolve_organisms(settings, organisms, gen)
+        # predators = evolve_predators(settings, predators, gen)
 
         _print_generation_stats(gen, stats)
 
@@ -36,23 +38,33 @@ def _simulate_environment(settings):
         foods.append(Food(settings))
 
     organisms = []
-    for org in range(0, settings['pop_size']):
+    for org in range(0, settings['org_num']):
         wih_init = np.random.uniform(-1, 1, (settings['hnodes'], settings['inodes']))  # mlp weights (input -> hidden)
         who_init = np.random.uniform(-1, 1, (settings['onodes'], settings['hnodes']))  # mlp weights (hidden -> output)
 
         organisms.append(Organism(settings, wih_init, who_init, name=first_gen_org_name_template(org)))
 
-    return organisms, foods
+    predators = []
+    if settings['pred_create']:
+        for pred in range(0, settings['pred_num']):
+            wih_init = np.random.uniform(-1, 1,
+                                         (settings['hnodes'], settings['inodes']))  # mlp weights (input -> hidden)
+            who_init = np.random.uniform(-1, 1,
+                                         (settings['onodes'], settings['hnodes']))  # mlp weights (hidden -> output)
+
+            predators.append(Predator(settings, wih_init, who_init, name=first_gen_org_name_template(pred)))
+
+    return predators, organisms, foods
 
 
-def _simulate_one_generation(settings, organisms, foods, gen):
+def _simulate_one_generation(settings, predators, organisms, foods, gen):
     total_ticks = settings['ticks']
 
     for tick in tqdm(range(0, total_ticks, 1), disable=True):
 
         shuffle(organisms)
         if gen in settings['plot_gens']:
-            plotting.plot_frame(settings, organisms, foods, gen, tick)
+            plotting.plot_frame(settings, predators, organisms, foods, gen, tick)
 
         org_vision = settings['org_vision_dist']
         for org1 in organisms:
@@ -60,19 +72,36 @@ def _simulate_one_generation(settings, organisms, foods, gen):
             # action on closest food
             closest_dist = org_vision
             for food in foods:
-                closest_dist = behave_on_food(closest_dist,
-                                              settings['food_eat_dist'],
-                                              org1,
-                                              food)
+                closest_dist = organism_behavior.behave_on_food(closest_dist,
+                                                                settings['org_eat_dist'],
+                                                                org1,
+                                                                food)
+            # action on closest predator
 
+                closest_dist = org_vision
+                for pred in predators:
+                    closest_dist = organism_behavior.behave_on_predator(closest_dist,
+                                                                        settings['pred_eat_dist'],
+                                                                        org1,
+                                                                        pred)
             # action on closest other organism
             closest_dist = org_vision
             for org2 in organisms:
-                closest_dist = behave_on_other_organism(closest_dist,
-                                                        settings['org_org_dist'],
-                                                        settings['org_org_penalty'],
-                                                        org1,
-                                                        org2)
+                closest_dist = organism_behavior.behave_on_other_organism(closest_dist,
+                                                                          settings['org_org_dist'],
+                                                                          settings['org_org_penalty'],
+                                                                          org1,
+                                                                          org2)
+
+        pred_vision = settings['pred_vision_dist']
+        for pred1 in predators:
+
+            closest_dist = pred_vision
+            for org in organisms:
+                closest_dist = predator_behavior.behave_on_organism(closest_dist,
+                                                                    settings['pred_eat_dist'],
+                                                                    pred1,
+                                                                    org)
 
         # simulate food and organism response
         for food in foods:
@@ -80,6 +109,9 @@ def _simulate_one_generation(settings, organisms, foods, gen):
 
         for org in organisms:
             org.think()
+
+        for pred in predators:
+            pred.think()
 
     return organisms
 
