@@ -35,7 +35,7 @@ class Predator:
         self.name = name
 
     # NEURAL NETWORK
-    def think(self):
+    def think(self, settings):
 
         # SIMPLE MLP
         def af(x):
@@ -51,6 +51,9 @@ class Predator:
         ]
         h1 = af(np.dot(self.wih, inputs))  # hidden layer
         out = np.multiply(af(np.dot(self.who, h1)), 0.5)  # output layer
+
+        # UPDATE FITNESS
+        self.fitness -= settings['pred_hunger_penalty']
 
         # UPDATE TAIL
         self.x_tail = self.x

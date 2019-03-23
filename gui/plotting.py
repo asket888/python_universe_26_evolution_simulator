@@ -71,12 +71,12 @@ def _plot_organism(org, ax):
 
 
 def _plot_dead_organism(org, ax):
-    circle = Circle([org.x, org.y], 0.05, edgecolor='saddlebrown', facecolor='brown', zorder=5)
+    circle = Circle([org.x, org.y], 0.05, edgecolor='darkgoldenrod', facecolor='goldenrod', zorder=5)
     ax.add_artist(circle)
 
 
 def _plot_predator(pred, ax):
-    circle = Circle([pred.x, pred.y], 0.10, edgecolor='darkred', facecolor='red', zorder=8)
+    circle = Circle([pred.x, pred.y], 0.07, edgecolor='darkred', facecolor='red', zorder=8)
     ax.add_artist(circle)
 
     ax.add_line(lines.Line2D([pred.x, pred.x_tail], [pred.y, pred.y_tail], color='darkred', linewidth=2, zorder=10))

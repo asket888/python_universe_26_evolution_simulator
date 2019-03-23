@@ -9,10 +9,13 @@ def behave_on_organism(closest_dist, eat_dist, pred, org):
             closest_dist = pred_org_dist
             pred.x_distance_to_food, pred.y_distance_to_food = maths_functions.xy_dist_to_organism(pred, org)
 
-    # update organism fitness function and food status
-    if pred_org_dist <= eat_dist:
-        pred.fitness += 1
-        org.fitness = 0
+        # update organism fitness function and food status
+        if pred_org_dist <= eat_dist:
+            pred.fitness += 1
+            org.fitness = 0
+
+    else:
+        pass
 
     return closest_dist
 

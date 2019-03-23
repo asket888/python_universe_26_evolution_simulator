@@ -14,8 +14,8 @@ class Organism:
         self.y_max = settings['y_max'] + 1
         self.y_min = settings['y_min'] - 1
 
-        self.x = np.random.uniform(settings['x_min'], settings['x_max'])
-        self.y = np.random.uniform(settings['y_min'], settings['y_max'])
+        self.x = np.random.uniform(settings['x_min'] - 1, settings['x_max'] + 1)
+        self.y = np.random.uniform(settings['y_min'] - 1, settings['y_max'] + 1)
 
         self.x_tail = self.x
         self.y_tail = self.y
@@ -35,7 +35,7 @@ class Organism:
         self.name = name
 
     # NEURAL NETWORK
-    def think(self):
+    def think(self, settings):
 
         # SIMPLE MLP
         def af(x):
@@ -51,6 +51,9 @@ class Organism:
         ]
         h1 = af(np.dot(self.wih, inputs))  # hidden layer
         out = np.multiply(af(np.dot(self.who, h1)), 0.5)  # output layer
+
+        # UPDATE FITNESS
+        self.fitness -= settings['org_hunger_penalty']
 
         # UPDATE TAIL
         self.x_tail = self.x
