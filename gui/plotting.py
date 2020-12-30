@@ -1,3 +1,5 @@
+import matplotlib as mpl
+mpl.use('TkAgg')
 from matplotlib import lines
 from matplotlib import pyplot
 from matplotlib.patches import Circle
