@@ -52,7 +52,7 @@ def settings():
     settings['onodes'] = 2                     # number of output nodes
 
     # GIF
-    settings['plot_gens'] = [9, 49, 199]    # plot following generations (list(range(10, 100, 10)))
+    settings['plot_gens'] = [9, 49]            # plot following generations (list(range(10, 100, 10)))
     settings['gif_fps'] = 12                   # frames per second
     settings['ts_in_gif'] = settings['ticks']  # gif duration
 

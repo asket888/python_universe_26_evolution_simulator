@@ -25,10 +25,10 @@ def simulate_all_generations(settings):
         if settings['pred_create']:
             predators = evolve_predators(settings, predators, gen)
 
-            gui.print_generation_stats(gen, stats)
-
         if gen in settings['plot_gens']:
             gui.build_generation_gif(settings, gen)
+
+        gui.print_generation_stats(gen, stats)
 
     plotting.plot_stats(settings, gen_stats)
 
