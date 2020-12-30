@@ -10,7 +10,7 @@ def settings():
     settings['food_num'] = 10                  # number of food particles
     settings['pred_num'] = 2                   # number of predator particles
     settings['elitism_org'] = 0.35             # elitism (percent of population to keep and allow to have children)
-    settings['elitism_pred'] = 0.5               # elitism (percent of population to keep and allow to have children)
+    settings['elitism_pred'] = 0.50            # elitism (percent of population to keep and allow to have children)
     settings['mutate'] = 0.2                   # mutation rate
 
     # FOOD SETTINGS
